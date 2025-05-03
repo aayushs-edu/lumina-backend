@@ -851,4 +851,4 @@ def generate_nap_gpt(prompt, max_tokens=1024):
     return response.choices[0].message.content
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0")
