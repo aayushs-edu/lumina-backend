@@ -430,6 +430,8 @@ def generate_policy():
 
     df = pd.read_csv("data/data.csv")
 
+    df['Legislation_Parsed'] = df['legislation'].apply(parse_legislation)
+
     ###### Check if the response already exists
     if os.path.exists(stored_naps_path):
         stored_naps = pd.read_csv(stored_naps_path)
