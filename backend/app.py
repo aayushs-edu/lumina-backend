@@ -21,9 +21,6 @@ import openai
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Load environment variables from .env file
-config = dotenv_values(".env")
-
 # Load template images (assume they are in ./templates)
 TEMPLATES = {
     "orange_title": "templates/orange_title.png",
@@ -66,7 +63,7 @@ feature_cols = [
 ]
 
 # OpenAI API key (set as environment variable in .env)
-openai.api_key = config["OPENAI_API_KEY"]
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 @app.route('/generate-caption', methods=['POST'])
 def generate_caption():
@@ -198,7 +195,7 @@ def post_instagram():
             return jsonify({"status": "error", "message": "No images found in current preview folder."}), 400
 
         client = Client()
-        client.login(config["INSTAGRAM_USERNAME"], config["INSTAGRAM_PASSWORD"])
+        client.login(os.environ.get("INSTAGRAM_USERNAME"), os.environ.get("INSTAGRAM_PASSWORD"))
         client.album_upload(image_paths, caption=caption)
         client.logout()
 
